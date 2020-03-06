@@ -1,0 +1,60 @@
+<div class="container" style="width: 75%;" >
+  <div class="row">
+    <div class="col-xs-12 col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2">
+      <form [formGroup]="contactForm" class="contactForm"  (ngSubmit)="onSubmit()" style="margin: 0%;">
+        <p style="font-weight: bold;font-size: 18px;" class="assignUserHeading">Edit Contact</p>
+
+        <div class="form-group" >
+          <label for="name">Name</label>
+          <input
+            type="text"
+            id="name"
+            formControlName="nameControl"
+            class="form-control"
+          />
+        </div>
+
+        <div class="form-group" >
+          <label for="phoneNumber">Phone Number</label>
+          <input
+            type="text"
+            id="phoneNumber"
+            formControlName="phoneNumberControl"
+            class="form-control"
+          />
+        </div>
+
+        <div class="form-group" >
+          <label for="phoneNumberType">Phone Number Type</label>
+          <select
+          id="phoneNumberType"
+          class="form-control"
+          formControlName="phoneNumberTypeControl">
+            <option *ngFor="let phoneNumberType of phoneNumberTypes" [ngValue]="phoneNumberType">{{phoneNumberType}}</option>
+          </select>
+        </div>
+
+        <div class="form-group" >
+          <label for="category">Category</label>
+          <select
+          id="category"
+          class="form-control"
+          formControlName="categoryControl">
+            <option *ngFor="let cat of categories" [ngValue]="cat">{{cat}}</option>
+          </select>
+        </div>
+
+        <button
+        class="btn btn-primary"
+        type="submit">Submit</button>
+        |
+        <button
+        class="btn btn-danger" (click)="closeDialog()"
+        >Cancel</button>
+
+      </form>
+    </div>
+  </div>
+
+
+</div>

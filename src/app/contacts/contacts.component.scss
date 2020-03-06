@@ -1,0 +1,66 @@
+.hide{
+  display: none;
+}
+
+.mat-header-row{
+  background: rgb(64,86,97);
+ }
+
+ .mat-row:hover {
+  background-color: rgb(176, 235, 205);
+}
+
+
+.mat-cell{
+  font-size:14px;
+  font-family: Verdana,Sans-Serif;
+  color: rgb(51, 50, 50);
+  }
+
+
+.mat-header-cell{
+  font-size:14px;
+  color: white;
+}
+.mat-footer-row .mat-footer-cell{
+  font-size:15px;
+  justify-content: center;
+  font-weight: bold;
+  color: white;
+  background: rgb(64,86,97);
+}
+
+/* Filter Control */
+
+.search-div{
+  margin: 10px 0px 10px 0px;
+}
+.search-form-field{
+  width: 40%;
+  padding: 5px 10px;
+  background-color: rgb(173, 206, 241);
+  border-radius: 5px;
+}
+
+.mat-form-field._mat-animation-noopable .mat-form-field-label{
+  color: rgb(27, 27, 27);
+}
+.search-form-field div.mat-form-field-underline{
+  display: none;
+}
+.search-form-field div.mat-form-field-infix{
+  border-top: 0px;
+}
+.search-form-field div.mat-form-field-wrapper{
+  padding-bottom: 0px;
+}
+
+.search-form-field div.mat-form-field-suffix button{
+  height: 32px;
+  width: 32px;
+}
+/* Filter end */
+
+.highlightNormal {
+  background-color: #abe1eb;
+}

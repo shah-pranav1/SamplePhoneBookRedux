@@ -1,0 +1,57 @@
+<div class="search-div"  >
+  <button mat-raised-button style="background-color: cornflowerblue;" (click)="onAddContact()">Add Contact</button>
+  |
+  <mat-form-field class="search-form-field" floatLabel="never">
+    <input matInput [(ngModel)]="searchKey" placeholder="Search" autocomplete="off" (keyup)="applyFilter()">
+    <button mat-button matSuffix mat-icon-button aria-label="Clear" *ngIf="searchKey" (click)="onSearchClear()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </mat-form-field>
+  </div>
+  <div class="mat-elevation-z8" >
+    <mat-table [dataSource]="contactList" matSort >
+      <ng-container matColumnDef="id">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Sr. No</mat-header-cell>
+        <mat-cell *matCellDef="let element">{{ element.id }}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="name">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Id</mat-header-cell>
+        <mat-cell *matCellDef="let element">{{ element.name }}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="phoneNumber">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Phone Number</mat-header-cell>
+        <mat-cell *matCellDef="let element">{{ element.phoneNumber }}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="numberType">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Type</mat-header-cell>
+        <mat-cell *matCellDef="let element">{{ element.numberType }}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="category">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Category</mat-header-cell>
+        <mat-cell *matCellDef="let element">{{ element.category }}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="action">
+        <mat-header-cell *matHeaderCellDef></mat-header-cell>
+        <mat-cell *matCellDef="let row">
+          <button mat-icon-button (click)="onEditContact(row)" ><mat-icon>edit</mat-icon></button>
+          <button mat-icon-button (click)="onDeleteContact(row)" color="warn"><mat-icon>delete_outline</mat-icon></button>
+        </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="loading">
+        <mat-footer-cell *matFooterCellDef colspan="6">
+          Loading Contacts...
+        </mat-footer-cell>
+      </ng-container>
+      <ng-container matColumnDef="noContacts">
+          <mat-footer-cell *matFooterCellDef colspan="6">
+            Contacts not found...
+          </mat-footer-cell>
+        </ng-container>
+      <mat-header-row *matHeaderRowDef="displayColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayColumns" class="highlightNormal"></mat-row>
+      <mat-footer-row *matFooterRowDef="['loading']" [ngClass]="{'hide': contactList!=null}"></mat-footer-row>
+      <mat-footer-row *matFooterRowDef="['noContacts']" [ngClass]="{'hide': !(contactList!=null && contactList.data.length===0)}"></mat-footer-row>
+    </mat-table>
+    <mat-paginator  [pageSizeOptions]="[5,10,15,20]" [pageSize]="5" showFirstLastButtons ></mat-paginator>
+
+  </div>

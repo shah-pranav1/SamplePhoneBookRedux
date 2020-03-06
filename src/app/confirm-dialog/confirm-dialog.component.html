@@ -1,0 +1,21 @@
+<div class="container" style="width: 100%" >
+  <div class="row">
+    <div class="col-xs-12">
+      <form [formGroup]="dialogForm" (ngSubmit)="onSubmit()" style="margin: 0%;">
+        <div class="form-group" >
+          <p>Are you sure to delete this contact?</p>
+
+        </div>
+        <button
+        class="btn btn-danger" (click)="closeDialog()" style="width: 70px;">No</button>
+        |
+        <button
+        class="btn btn-primary"
+        (click)="onConfirmDelete()"
+        style="width: 70px;">Yes</button>
+      </form>
+    </div>
+  </div>
+
+
+</div>
