@@ -42,13 +42,12 @@ export class ContactComponent implements OnInit {
     if (this.isEditMode) {
       this.formHeading = 'Edit Contact';
       this.contactForm = new FormGroup({
-        nameControl: new FormControl(this.name),
-        phoneNumberControl: new FormControl(this.phoneNumber),
-        phoneNumberTypeControl: new FormControl(this.numberType),
-        categoryControl: new FormControl(this.category)
+        nameControl: new FormControl(this.name, [Validators.required]),
+        phoneNumberControl: new FormControl(this.phoneNumber, [Validators.required, Validators.minLength(10)]),
+        phoneNumberTypeControl: new FormControl(this.numberType, [Validators.required]),
+        categoryControl: new FormControl(this.category, [Validators.required])
       });
-    }
-    else {
+    } else {
       this.contactForm = new FormGroup({
         nameControl: new FormControl(null, [Validators.required]),
         phoneNumberControl: new FormControl(null, [Validators.required, Validators.minLength(10)]),
@@ -61,23 +60,20 @@ export class ContactComponent implements OnInit {
 
   onSubmit() {
     if (this.contactForm.valid) {
-      if(this.isEditMode)
-      {
-        let updatedContact: Contact = {
-          id : this.id,
-          name : this.contactForm.value.nameControl,
+      if (this.isEditMode) {
+        const updatedContact: Contact = {
+          id: this.id,
+          name: this.contactForm.value.nameControl,
           phoneNumber: this.contactForm.value.phoneNumberControl,
           numberType: this.contactForm.value.phoneNumberTypeControl,
           category: this.contactForm.value.categoryControl
         };
         this.contactService.updateContact(updatedContact);
-      }
-      else
-      {
-        let newId = this.contactService.contacts.length + 1;
-        let newContact: Contact = {
-          id : newId,
-          name : this.contactForm.value.nameControl,
+      } else {
+        const newId = this.contactService.contacts.length + 1;
+        const newContact: Contact = {
+          id: newId,
+          name: this.contactForm.value.nameControl,
           phoneNumber: this.contactForm.value.phoneNumberControl,
           numberType: this.contactForm.value.phoneNumberTypeControl,
           category: this.contactForm.value.categoryControl
