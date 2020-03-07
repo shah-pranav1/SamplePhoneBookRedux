@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material';
 import { Contact } from 'src/shared/models/contact.model';
 import { ContactService } from 'src/shared/services/contact.service';
@@ -18,6 +18,7 @@ export class ContactComponent implements OnInit {
   category: string;
   isEditMode = false;
   contactForm: FormGroup;
+  formHeading = 'Add Contact';
 
   phoneNumberTypes: string[] = [
     'Work',
@@ -39,6 +40,7 @@ export class ContactComponent implements OnInit {
 
   ngOnInit() {
     if (this.isEditMode) {
+      this.formHeading = 'Edit Contact';
       this.contactForm = new FormGroup({
         nameControl: new FormControl(this.name),
         phoneNumberControl: new FormControl(this.phoneNumber),
@@ -48,10 +50,10 @@ export class ContactComponent implements OnInit {
     }
     else {
       this.contactForm = new FormGroup({
-        nameControl: new FormControl(),
-        phoneNumberControl: new FormControl(),
-        phoneNumberTypeControl: new FormControl(),
-        categoryControl: new FormControl()
+        nameControl: new FormControl(null, [Validators.required]),
+        phoneNumberControl: new FormControl(null, [Validators.required, Validators.minLength(10)]),
+        phoneNumberTypeControl: new FormControl(null, [Validators.required]),
+        categoryControl: new FormControl(null, [Validators.required])
       });
     }
 

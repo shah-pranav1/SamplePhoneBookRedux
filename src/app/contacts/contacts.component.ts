@@ -49,7 +49,7 @@ export class ContactsComponent implements OnInit {
 
   onAddContact() {
     const dialogConfig = new MatDialogConfig();
-    dialogConfig.height = '55%';
+    dialogConfig.height = '57%';
     dialogConfig.width = '30%';
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = false;
@@ -66,7 +66,7 @@ export class ContactsComponent implements OnInit {
 
   onEditContact(row) {
     const dialogConfig = new MatDialogConfig();
-    dialogConfig.height = '55%';
+    dialogConfig.height = '57%';
     dialogConfig.width = '30%';
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = false;
