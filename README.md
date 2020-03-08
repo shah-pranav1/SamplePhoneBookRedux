@@ -2,7 +2,7 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.0.3. <br/>
 This project lists pre-defined in-memory contacts. User can add, edit, delete contacts in memory. <br/>
-This project demonstrates use of service, model, bhavior subject, material, view encapsulation in angular. <br/> 
+This project demonstrates use of ngrx redux pattern, model, bhavior subject, material, view encapsulation in angular. <br/> 
 
 ## Features
 
