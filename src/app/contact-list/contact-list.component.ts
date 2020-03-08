@@ -60,7 +60,7 @@ export class ContactListComponent implements OnInit, OnDestroy {
   openContactDialog(contactData?: Contact) {
 
     const dialogConfig = new MatDialogConfig();
-    dialogConfig.height = '57%';
+    dialogConfig.height = '60%';
     dialogConfig.width = '30%';
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = false;
