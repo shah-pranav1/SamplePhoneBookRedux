@@ -78,7 +78,7 @@ export class ContactComponent implements OnInit, OnDestroy {
         this.store.dispatch(new ContactListActions.UpdateContact(updatedContact));
       } else {
         this.contactStoreSub = this.store.select('contactList').subscribe(data => {
-          this.newId = data.contacts.sort((item1, item2) => item1.id - item2.id)[0].id + 1;
+          this.newId = data.contacts.sort((item1, item2) => item2.id - item1.id)[0].id + 1;
         });
         const newContact: Contact = {
           id: this.newId,
