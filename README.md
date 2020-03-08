@@ -6,7 +6,7 @@ This project demonstrates use of ngrx redux pattern, model, bhavior subject, mat
 
 ## Features
 
-List contacts <br/>
+List contacts, Sorting (Default: Descending), Paging <br/>
 Search contact <br/>
 Add contact <br/>
 Update contact <br/>
