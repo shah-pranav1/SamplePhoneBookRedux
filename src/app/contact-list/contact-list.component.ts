@@ -8,12 +8,12 @@ import { Contact } from 'src/shared/models/contact.model';
 
 
 @Component({
-  selector: 'app-contacts',
-  templateUrl: './contacts.component.html',
-  styleUrls: ['./contacts.component.scss'],
+  selector: 'app-contact-list',
+  templateUrl: './contact-list.component.html',
+  styleUrls: ['./contact-list.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class ContactsComponent implements OnInit {
+export class ContactListComponent implements OnInit {
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   searchKey: string;
