@@ -10,6 +10,8 @@ import { AppComponent } from './app.component';
 import { ContactListComponent } from './contact-list/contact-list.component';
 import { ContactComponent } from './contact/contact.component';
 import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
+import { StoreModule } from '@ngrx/store';
+import { contactListReducer } from './contact-list/store/contact-list.reducer';
 
 @NgModule({
   declarations: [
@@ -21,6 +23,7 @@ import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.componen
   imports: [
     BrowserModule,
     AppRoutingModule,
+    StoreModule.forRoot({contactList: contactListReducer}),
     MaterialModule,
     FormsModule,
     ReactiveFormsModule,

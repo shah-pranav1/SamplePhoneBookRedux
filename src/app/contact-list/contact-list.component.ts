@@ -1,11 +1,12 @@
 import { Component, OnInit, ViewChild, ViewEncapsulation, AfterViewInit, OnDestroy } from '@angular/core';
 import { MatTableDataSource, MatSort, MatPaginator, MatDialog, MatDialogConfig, MatDialogRef, Sort } from '@angular/material';
-import { ContactService } from 'src/shared/services/contact.service';
+import { Subscription, Observable } from 'rxjs';
+import { Store } from '@ngrx/store';
 import { ContactComponent } from '../contact/contact.component';
-import { filter, take } from 'rxjs/operators';
+import { filter, take, map } from 'rxjs/operators';
 import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 import { Contact } from 'src/shared/models/contact.model';
-import { Subscription } from 'rxjs';
+
 
 
 @Component({
@@ -21,9 +22,12 @@ export class ContactListComponent implements OnInit, OnDestroy {
   contactList: MatTableDataSource<any>;
   displayColumns: string[] = ['id', 'name', 'phoneNumber', 'numberType', 'category', 'action'];
   sortState: Sort = { active: 'id', direction: 'desc' };
-  contactsChangedSub: Subscription;
+  contactStoreSub: Subscription;
 
-  constructor(private contactService: ContactService, private dialog: MatDialog) { }
+  constructor(
+    private dialog: MatDialog,
+    private store: Store<{ contactList: { contacts: Contact[] } }>
+  ) { }
 
   ngOnInit() {
     this.populateContactList();
@@ -83,9 +87,10 @@ export class ContactListComponent implements OnInit, OnDestroy {
   }
 
   populateContactList() {
-    if (this.dialog) {
-      this.contactsChangedSub = this.contactService.contactsChanged.subscribe((contacts: Contact[]) => {
-        this.contactList = new MatTableDataSource(contacts);
+
+      this.contactStoreSub = this.store.select('contactList').subscribe(data => {
+
+        this.contactList = new MatTableDataSource(data.contacts);
         this.contactList.sort = this.sort;
         this.contactList.paginator = this.paginator;
 
@@ -97,10 +102,9 @@ export class ContactListComponent implements OnInit, OnDestroy {
           return this.displayColumns.some(ele => {
             return ele != 'action' && data[ele].toString().toLocaleLowerCase().indexOf(filter) != -1;
           });
-        }
-
+        };
       });
-    }
+
   }
 
   onDeleteContact(row) {
@@ -122,8 +126,8 @@ export class ContactListComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    if (this.contactsChangedSub) {
-      this.contactsChangedSub.unsubscribe();
+    if (this.contactStoreSub) {
+      this.contactStoreSub.unsubscribe();
     }
   }
 

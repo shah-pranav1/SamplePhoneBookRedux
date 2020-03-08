@@ -1,8 +1,10 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, OnDestroy } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material';
+import { Store } from '@ngrx/store';
 import { Contact } from 'src/shared/models/contact.model';
-import { ContactService } from 'src/shared/services/contact.service';
+import * as ContactListActions from '../contact-list/store/contact-list.actions';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-contact',
@@ -10,7 +12,7 @@ import { ContactService } from 'src/shared/services/contact.service';
   styleUrls: ['./contact.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class ContactComponent implements OnInit {
+export class ContactComponent implements OnInit, OnDestroy {
   id: number;
   name: string;
   phoneNumber: string;
@@ -19,6 +21,8 @@ export class ContactComponent implements OnInit {
   isEditMode = false;
   contactForm: FormGroup;
   formHeading = 'Add Contact';
+  contactStoreSub: Subscription;
+  newId: number;
 
   phoneNumberTypes: string[] = [
     'Work',
@@ -36,7 +40,10 @@ export class ContactComponent implements OnInit {
   ];
 
 
-  constructor(public dialogRef: MatDialogRef<ContactComponent>, private contactService: ContactService) { }
+  constructor(
+    public dialogRef: MatDialogRef<ContactComponent>,
+    private store: Store<{ contactList: { contacts: Contact[] } }>
+  ) { }
 
   ngOnInit() {
     if (this.isEditMode) {
@@ -68,17 +75,19 @@ export class ContactComponent implements OnInit {
           numberType: this.contactForm.value.phoneNumberTypeControl,
           category: this.contactForm.value.categoryControl
         };
-        this.contactService.updateContact(updatedContact);
+        this.store.dispatch(new ContactListActions.UpdateContact(updatedContact));
       } else {
-        const newId = this.contactService.contacts.length + 1;
+        this.contactStoreSub = this.store.select('contactList').subscribe(data => {
+          this.newId = data.contacts.length + 1;
+        });
         const newContact: Contact = {
-          id: newId,
+          id: this.newId,
           name: this.contactForm.value.nameControl,
           phoneNumber: this.contactForm.value.phoneNumberControl,
           numberType: this.contactForm.value.phoneNumberTypeControl,
           category: this.contactForm.value.categoryControl
         };
-        this.contactService.addContact(newContact);
+        this.store.dispatch(new ContactListActions.AddContact(newContact));
       }
 
       this.closeDialog();
@@ -97,6 +106,12 @@ export class ContactComponent implements OnInit {
   closeDialog() {
     this.initializeFormGroup();
     this.dialogRef.close();
+  }
+
+  ngOnDestroy(){
+    if(this.contactStoreSub){
+      this.contactStoreSub.unsubscribe();
+    }
   }
 
 }

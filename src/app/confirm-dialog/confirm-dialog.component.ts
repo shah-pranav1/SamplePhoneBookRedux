@@ -2,7 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
 import { MatDialogRef } from '@angular/material';
-import { ContactService } from 'src/shared/services/contact.service';
+import { Store } from '@ngrx/store';
+import { Contact } from 'src/shared/models/contact.model';
+import * as ContactListActions from '../contact-list/store/contact-list.actions';
+
 
 @Component({
   selector: 'app-confirm-dialog',
@@ -12,7 +15,10 @@ import { ContactService } from 'src/shared/services/contact.service';
 export class ConfirmDialogComponent implements OnInit {
   id: number;
   dialogForm: FormGroup;
-  constructor(public dialogRef: MatDialogRef<ConfirmDialogComponent>, private contactService: ContactService) { }
+  constructor(
+    public dialogRef: MatDialogRef<ConfirmDialogComponent>,
+    private store: Store<{ contactList: { contacts: Contact[] } }>
+  ) { }
 
   ngOnInit() {
     this.dialogForm = new FormGroup({});
@@ -22,10 +28,9 @@ export class ConfirmDialogComponent implements OnInit {
     this.dialogRef.close();
   }
 
-  onConfirmDelete(){
-this.contactService.deleteContact(this.id);
-console.log(this.contactService.contacts);
-this.dialogRef.close();
+  onConfirmDelete() {
+    this.store.dispatch(new ContactListActions.DeleteContact(this.id));
+    this.dialogRef.close();
   }
 
 }

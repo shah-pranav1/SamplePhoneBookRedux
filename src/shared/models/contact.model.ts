@@ -1,7 +1,9 @@
-export interface Contact {
-  id: number;
-  name: string;
-  phoneNumber: string;
-  numberType: string;
-  category: string;
+export class Contact {
+  constructor(
+    public id: number,
+    public name: string,
+    public phoneNumber: string,
+    public numberType: string,
+    public category: string,
+  ) { }
 }
