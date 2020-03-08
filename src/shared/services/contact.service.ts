@@ -1,11 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Contact } from '../models/contact.model';
-import { Subject } from 'rxjs';
+import { Subject, BehaviorSubject } from 'rxjs';
 
-@Injectable({providedIn: 'root'})
-export class ContactService{
-
-  contactsChanged = new Subject<Contact[]>();
+@Injectable({ providedIn: 'root' })
+export class ContactService {
 
   contacts: Contact[] = [
     { id: 1, name: 'Jack', phoneNumber: '0747474747', numberType: 'Mobile', category: 'Family' },
@@ -17,11 +15,13 @@ export class ContactService{
     { id: 7, name: 'Nancy', phoneNumber: '0127854782', numberType: 'Mobile', category: 'Office' }
   ];
 
-  getContacts() {
-    return this.contacts.slice();
-  }
+  contactsChanged = new BehaviorSubject<Contact[]>(this.contacts);
 
-  addContact(newContact: Contact){
+  // getContacts() {
+  //   return this.contacts.slice();
+  // }
+
+  addContact(newContact: Contact) {
     this.contacts.push(newContact);
     this.contactsChanged.next(this.contacts.slice());
   }
@@ -32,7 +32,7 @@ export class ContactService{
     this.contactsChanged.next(this.contacts.slice());
   }
 
-  deleteContact(id: number){
+  deleteContact(id: number) {
     const index = this.contacts.findIndex(item => item.id === id);
     this.contacts.splice(index, 1);
     this.contactsChanged.next(this.contacts.slice());
